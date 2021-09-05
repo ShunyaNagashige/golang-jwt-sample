@@ -1,0 +1,27 @@
+{
+    "name": "Go",
+    "dockerComposeFile": ["../docker-compose.yml"],
+    "service": "app" ,
+    "workspaceFolder": "/go/src/github.com/ShunyaNagashige/golang-jwt-sample",
+    "settings": {
+      // "terminal.integrated.shell.linux": "/bin/bash",
+      "terminal.integrated.profiles.linux": {
+        "bash": {
+          "path": "/bin/bash"
+        },
+      },
+      "go.toolsManagement.checkForUpdates": "off",
+      "go.gopath": "/go",
+      "go.gocodeAutoBuild": true,
+      "go.formatTool": "goimports",
+      "go.useLanguageServer": true,
+      "editor.formatOnSave": false,
+      "[go]": {
+        "editor.formatOnSave": true
+      }
+    },
+    "extensions": [
+      "golang.go"
+    ],
+}
+  

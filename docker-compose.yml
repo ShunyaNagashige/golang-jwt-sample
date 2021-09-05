@@ -1,0 +1,40 @@
+version: '3'
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    stdin_open: true
+    tty: true
+    volumes:
+      - .:/go/src/github.com/ShunyaNagashige/golang-jwt-sample
+    ports:
+      #APIサーバ用のポート
+      - ${APP_PORT}:8080
+    environment:
+      - ENV=${ENV}
+      - SIGNINGKEY=${SIGNINGKEY}
+    depends_on:
+      - "db"
+
+  db:
+    image: mysql:8.0
+    volumes:
+          # 初期データを投入するSQLが格納されているdir
+          - ./docker/mysql/init:/docker-entrypoint-initdb.d
+          - db-data:/var/lib/mysql
+          - ./logs:/var/log/mysql
+          - ./docker/mysql/my.cnf:/etc/mysql/conf.d/my.cnf
+    command: mysqld --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
+    environment:
+    - MYSQL_DATABASE=${DB_NAME}
+    - MYSQL_USER=${DB_USER}
+    - MYSQL_PASSWORD=${DB_PASS}
+    - MYSQL_ROOT_PASSWORD=${DB_PASS}
+    - TZ=${TZ}
+    ports:
+      #DBサーバ用のPORT
+      - ${DB_PORT}:3306
+
+volumes:
+  db-data:
